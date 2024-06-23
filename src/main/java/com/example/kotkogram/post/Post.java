@@ -1,4 +1,4 @@
-package com.example.kotkogram.posts;
+package com.example.kotkogram.post;
 
 import java.time.LocalDate;
 
@@ -55,14 +55,5 @@ public class Post {
         this.description = description;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-    }
-
-    @Override
-    public String toString() {
-        return "Post{" +
-                "id=" + id +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", description='" + description + '\'' +
-                '}';
     }
 }

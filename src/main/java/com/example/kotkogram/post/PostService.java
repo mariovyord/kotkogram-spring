@@ -1,4 +1,4 @@
-package com.example.kotkogram.posts;
+package com.example.kotkogram.post;
 
 import java.util.List;
 import java.util.Optional;
