@@ -1,4 +1,4 @@
-package com.example.kotkogram.commend;
+package com.example.kotkogram.comment;
 
 import java.util.List;
 

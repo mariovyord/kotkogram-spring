@@ -1,11 +1,16 @@
-package com.example.kotkogram.commend;
+package com.example.kotkogram.comment;
 
 import java.time.LocalDate;
 
+import com.example.kotkogram.post.Post;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -28,31 +33,31 @@ public class Comment {
     @Size(min = 1)
     private String content;
 
-    // TODO: Add a ManyToOne relationship with Post
-    @NotNull
-    private Long postId;
-
     @NotNull
     private LocalDate createdAt;
 
     @NotNull
     private LocalDate updatedAt;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id", nullable = false)
+    private Post post;
+
     public Comment() {
     }
 
-    public Comment(Long id, String content, Long postId, LocalDate createdAt, LocalDate updatedAt) {
+    public Comment(Long id, String content, LocalDate createdAt, LocalDate updatedAt, Post post) {
         this.id = id;
         this.content = content;
-        this.postId = postId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.post = post;
     }
 
-    public Comment(String content, Long postId, LocalDate createdAt, LocalDate updatedAt) {
+    public Comment(String content, LocalDate createdAt, LocalDate updatedAt, Post post) {
         this.content = content;
-        this.postId = postId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.post = post;
     }
 }

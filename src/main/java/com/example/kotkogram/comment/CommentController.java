@@ -1,4 +1,4 @@
-package com.example.kotkogram.commend;
+package com.example.kotkogram.comment;
 
 import java.util.List;
 
@@ -24,18 +24,23 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @GetMapping(path = "{postId}")
-    public List<Comment> getCommentsByPostId(@PathVariable Long postId) {
+    @GetMapping()
+    public List<CommentDto> getCommentsByPostId(@RequestParam Long postId) {
         return commentService.getCommentsByPostId(postId);
     }
 
+    @GetMapping(path = "{id}")
+    public CommentDto getCommentById(@PathVariable Long id) {
+        return commentService.getCommentById(id);
+    }
+
     @PostMapping
-    public Comment addComment(@RequestBody Comment comment) {
+    public CommentDto addComment(@RequestBody CreateCommentDto comment) {
         return commentService.addComment(comment);
     }
 
     @PutMapping(path = "{id}")
-    public Comment updateComment(@PathVariable Long id, @RequestBody Comment comment) {
+    public CommentDto updateComment(@PathVariable Long id, @RequestBody Comment comment) {
         return commentService.updateComment(id, comment);
     }
 
