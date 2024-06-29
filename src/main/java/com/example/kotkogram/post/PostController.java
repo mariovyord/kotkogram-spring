@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,8 +25,12 @@ public class PostController {
     }
 
     @GetMapping
-    public List<Post> getPosts() {
-        return postsService.getPosts();
+    public List<Post> getPosts(@RequestParam(required = false) Long authorId) {
+        if (authorId == null) {
+            return postsService.getPosts();
+        } else {
+            return postsService.getPostsByAuthorId(authorId);
+        }
     }
 
     @GetMapping(path = "{id}")
@@ -34,7 +39,7 @@ public class PostController {
     }
 
     @PostMapping
-    public Post addPost(@RequestBody Post post) {
+    public PostDto addPost(@RequestBody CreatePostDto post) {
         return postsService.addPost(post);
     }
 
