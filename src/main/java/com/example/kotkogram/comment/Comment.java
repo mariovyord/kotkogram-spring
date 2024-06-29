@@ -3,6 +3,7 @@ package com.example.kotkogram.comment;
 import java.time.LocalDate;
 
 import com.example.kotkogram.post.Post;
+import com.example.kotkogram.user.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -43,21 +44,27 @@ public class Comment {
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "author_id", nullable = false)
+    private User author;
+
     public Comment() {
     }
 
-    public Comment(Long id, String content, LocalDate createdAt, LocalDate updatedAt, Post post) {
+    public Comment(Long id, String content, LocalDate createdAt, LocalDate updatedAt, Post post, User author) {
         this.id = id;
         this.content = content;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.post = post;
+        this.author = author;
     }
 
-    public Comment(String content, LocalDate createdAt, LocalDate updatedAt, Post post) {
+    public Comment(String content, LocalDate createdAt, LocalDate updatedAt, Post post, User author) {
         this.content = content;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.post = post;
+        this.author = author;
     }
 }

@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.kotkogram.post.Post;
 import com.example.kotkogram.post.PostRepository;
+import com.example.kotkogram.user.User;
+import com.example.kotkogram.user.UserDto;
+import com.example.kotkogram.user.UserRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -18,10 +21,14 @@ public class CommentService {
 
     private final PostRepository postRepository;
 
+    private final UserRepository userRepository;
+
     @Autowired
-    public CommentService(CommentRepository commentRepository, PostRepository postRepository) {
+    public CommentService(CommentRepository commentRepository, PostRepository postRepository,
+            UserRepository userRepository) {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
     public List<CommentDto> getCommentsByPostId(Long postId) {
@@ -53,13 +60,27 @@ public class CommentService {
 
         newComment.setPost(post);
 
+        User author = userRepository.findById(commentDto.getAuthorId())
+                .orElseThrow(
+                        () -> new IllegalStateException(
+                                "User with id " + commentDto.getAuthorId() + " does not exist"));
+
+        newComment.setAuthor(author);
+
         Comment createdComment = commentRepository.save(newComment);
+
+        UserDto authorDto = new UserDto();
+        authorDto.setId(author.getId());
+        authorDto.setUsername(author.getUsername());
+        authorDto.setCreatedAt(author.getCreatedAt());
+        authorDto.setUpdatedAt(author.getUpdatedAt());
 
         return new CommentDto(
                 createdComment.getId(),
                 createdComment.getContent(),
                 createdComment.getCreatedAt(),
-                createdComment.getUpdatedAt());
+                createdComment.getUpdatedAt(),
+                authorDto);
 
     }
 

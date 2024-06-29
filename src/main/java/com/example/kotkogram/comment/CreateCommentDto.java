@@ -16,11 +16,15 @@ public class CreateCommentDto {
     @NotNull
     private Long postId;
 
+    @NotNull
+    private Long authorId;
+
     public CreateCommentDto() {
     }
 
-    public CreateCommentDto(String content, Long postId) {
+    public CreateCommentDto(String content, Long postId, Long authorId) {
         this.content = content;
         this.postId = postId;
+        this.authorId = authorId;
     }
 }
