@@ -22,9 +22,4 @@ public class UserController {
         userService.createUser(user);
     }
 
-    @PostMapping(path = "/login")
-    public String loginUser(@RequestBody LoginUserDto user) {
-        return userService.loginUser(user);
-    }
-
 }
